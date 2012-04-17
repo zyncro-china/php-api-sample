@@ -31,7 +31,8 @@
 
 	function authorizeToken($username, $password, $request_token) 
 	{		
-		try {
+		try 
+		{
 			$data = "username=".$username."&password=".$password."&request_token=".$request_token;
 			$result = OAuthUtil::do_post_request(AUTHORIZE_URL, $data);
 			return true;
@@ -44,17 +45,18 @@
 
 	function authorizeOAuth($username, $password)
 	{
-		try {
+		try 
+		{
 			$token = OAuthRequester::requestRequestToken(API_KEY, 0, array());
 
 			if (authorizeToken($username, $password, $token['token'])) 
 			{
-		    	OAuthRequester::requestAccessToken(API_KEY, $token['token'], 0, 'POST', NULL);
-		    } 
-		    else
-		    {
-		    	throw new Exception("Error authorizing OAuth");
-		    } 
+		    		OAuthRequester::requestAccessToken(API_KEY, $token['token'], 0, 'POST', NULL);
+		    	} 
+		    	else
+		    	{
+		    		throw new Exception("Error authorizing OAuth");
+		    	} 
 		}
 		catch (OAuthException2 $e)
 		{			
